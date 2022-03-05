@@ -11,6 +11,6 @@ urlpatterns = [
 ]
 
 router = DefaultRouter()
-router.register(r'profile', ProfileViewSet)
+router.register(r'profile', ProfileViewSet, basename='profile')
 
 urlpatterns += router.urls

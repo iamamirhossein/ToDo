@@ -28,3 +28,10 @@ class ProfileTestCase(APITestCase):
         })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         return response.data.get('access', '')
+
+    def test_ok(self):
+        path = self.url
+        access_token = self.test_get_token()
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
+        response = self.client.get(path)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

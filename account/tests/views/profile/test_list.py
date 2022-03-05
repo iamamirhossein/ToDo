@@ -20,3 +20,11 @@ class ProfileTestCase(APITestCase):
         cls.client = APIClient()
         cls.url = reverse('account:profile-list')
         cls.token_url = reverse('account:token-get')
+
+    def test_get_token(self):
+        response = self.client.post(self.token_url, data={
+            'username': self.super_user.username,
+            'password': "1234"
+        })
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        return response.data.get('access', '')

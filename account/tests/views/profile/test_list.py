@@ -21,7 +21,7 @@ class ProfileTestCase(APITestCase):
         cls.url = reverse('account:profile-list')
         cls.token_url = reverse('account:token-get')
 
-    def test_get_token(self):
+    def get_token(self):
         response = self.client.post(self.token_url, data={
             'username': self.super_user.username,
             'password': "1234"
@@ -31,7 +31,7 @@ class ProfileTestCase(APITestCase):
 
     def test_ok(self):
         path = self.url
-        access_token = self.test_get_token()
+        access_token = self.get_token()
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
         response = self.client.get(path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -5,7 +5,7 @@ from account.models import Profile
 from django.contrib.auth.models import User
 
 
-class ProfileTestCase(APITestCase):
+class ProfileUpdateTestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -13,12 +13,12 @@ class ProfileTestCase(APITestCase):
                                                        email='admin@admin.test',
                                                        password='1234')
         cls.normal_user = User.objects.create_user(username='new_user')
-        Profile.objects.create(
+        cls.profile = Profile.objects.create(
             nick_name='superuser',
             user=cls.super_user
         )
         cls.client = APIClient()
-        cls.url = reverse('account:profile-list')
+        cls.url = reverse('account:profile-detail', kwargs={'pk': cls.profile.pk})
         cls.token_url = reverse('account:token-get')
 
     def get_token(self):
@@ -33,10 +33,14 @@ class ProfileTestCase(APITestCase):
         path = self.url
         access_token = self.get_token()
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
-        response = self.client.get(path)
+        data = {
+            'nick_name': 'foo',
+        }
+        response = self.client.put(path, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data.get('nick_name'), 'foo')
 
     def test_unauthorized(self):
         path = self.url
-        response = self.client.get(path)
+        response = self.client.put(path)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

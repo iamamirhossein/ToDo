@@ -3,12 +3,24 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
+def deactivate_profile(modeladmin, request, queryset):
+    records = queryset.update(is_active=False)
+    message_bit = 'items'
+    if records == 1:
+        message_bit = 'item'
+    modeladmin.message_user(request, f'{records} {message_bit} deactivated.')
+
+
+deactivate_profile.short_description = 'Deactive Profile'
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('nick_name', 'user')
+    list_display = ('nick_name', 'user',)
+    actions = [deactivate_profile]
 
 
 class UserAdmin(admin.ModelAdmin):

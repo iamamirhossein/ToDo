@@ -19,7 +19,7 @@ class ProfileInline(admin.StackedInline):
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('nick_name', 'user',)
+    list_display = ('nick_name', 'user', 'is_active')
     actions = [deactivate_profile]
 
 

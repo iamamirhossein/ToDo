@@ -31,8 +31,7 @@ class ProfileTestCase(APITestCase):
 
     def test_ok(self):
         path = self.url
-        access_token = self.get_token()
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
+        self.client.force_authenticate(user=self.super_user)
         response = self.client.get(path)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

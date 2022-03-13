@@ -47,7 +47,6 @@ class ProfileUpdateTestCase(APITestCase):
 
     def test_bad_request(self):
         path = self.url
-        access_token = self.get_token()
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + access_token)
+        self.client.force_authenticate(user=self.super_user)
         response = self.client.put(path)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

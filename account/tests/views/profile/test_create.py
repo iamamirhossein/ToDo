@@ -19,3 +19,9 @@ class ProfileCreateTestCase(APITestCase):
         cls.client = APIClient()
         cls.url = reverse('account:profile-list')
         cls.token_url = reverse('account:token-get')
+
+    def temporary_image(self):
+        bts = BytesIO()
+        img = Image.new("RGB", (100, 100))
+        img.save(bts, 'jpeg')
+        return SimpleUploadedFile("test.jpg", bts.getvalue())

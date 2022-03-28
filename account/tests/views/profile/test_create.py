@@ -36,6 +36,15 @@ class ProfileCreateTestCase(APITestCase):
         }
         response = self.client.post(path, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        print(response.data)
         self.assertEqual(response.data.get('nick_name'), 'foo')
         self.assertEqual(response.data.get('avatar').split('/')[-1], image.name)
+
+    def test_create_with_bad_image_400(self):
+        path = self.url
+        self.client.force_authenticate(user=self.super_user)
+        data = {
+            'nick_name': 'foo',
+            'avatar': 'image.jpg',
+        }
+        response = self.client.post(path, data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

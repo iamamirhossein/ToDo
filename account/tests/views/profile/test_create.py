@@ -25,3 +25,17 @@ class ProfileCreateTestCase(APITestCase):
         img = Image.new("RGB", (100, 100))
         img.save(bts, 'jpeg')
         return SimpleUploadedFile("test.jpg", bts.getvalue())
+
+    def test_ok(self):
+        path = self.url
+        self.client.force_authenticate(user=self.super_user)
+        image = self.temporary_image()
+        data = {
+            'nick_name': 'foo',
+            'avatar': image,
+        }
+        response = self.client.post(path, data=data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        print(response.data)
+        self.assertEqual(response.data.get('nick_name'), 'foo')
+        self.assertEqual(response.data.get('avatar').split('/')[-1], image.name)

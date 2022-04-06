@@ -27,8 +27,8 @@ class Item(models.Model):
     assigned = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='assigned_items', null=True)
     item_type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=ITEM_TASK)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_TODO)
-    created_at = models.DateTimeField(auto_now=True)
-    modified_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Item'

@@ -28,3 +28,10 @@ class Item(models.Model):
     item_type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=ITEM_TASK)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_TODO)
 
+    class Meta:
+        verbose_name = 'Item'
+        verbose_name_plural = 'Items'
+
+    def __str__(self):
+        return self.title
+

@@ -3,18 +3,18 @@ from django.contrib.auth.models import User
 
 
 class Item(models.Model):
-    ITEM_TASK = 1
-    ITEM_ISSUE = 2
-    ITEM_REMINDER = 3
+    ITEM_TASK = '1'
+    ITEM_ISSUE = '2'
+    ITEM_REMINDER = '3'
     TYPE_CHOICES = [
         (ITEM_TASK, 'task'),
         (ITEM_ISSUE, 'issue'),
         (ITEM_REMINDER, 'reminder'),
     ]
 
-    STATUS_DONE = 1
-    STATUS_DOING = 2
-    STATUS_TODO = 3
+    STATUS_DONE = '1'
+    STATUS_DOING = '2'
+    STATUS_TODO = '3'
     STATUS_CHOICES = [
         (STATUS_DONE, 'done'),
         (STATUS_DOING, 'doing'),
